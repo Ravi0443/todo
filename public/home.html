@@ -1,0 +1,50 @@
+<div class="container">
+	<h1>{{vm.title}}</h1>
+	
+	<div class="container users-container">
+		<table class="table table-bordered table-striped table-hovered table-condensed" ng-hide="vm.detailed">
+			<th>Name</th>
+			<th>Age</th>
+			<th>Actions</th>
+			<tr ng-repeat="user in vm.users">
+				<td style="cursor: pointer;" ng-if="!editing" ng-click="vm.showDetails(user)">{{user.name}}</td>
+
+				<td style="cursor: pointer;" ng-if="!editing" ng-click="vm.showDetails(user)">{{user.age}}</td>
+
+				<td ng-if="editing">
+				<input type="text" ng-model="user.name" class="form-control" style=" width: 100px">
+				</td>
+				<td ng-if="editing">
+					<input type="Number" ng-model="user.age" class="form-control" style="width: 100px">
+				</td>
+				<td>
+					<button class="btn btn-warning"  ng-click="editing=!editing">Edit</button>
+					<button class="btn btn-success" ng-hide="!editing" ng-click="vm.updateUser(user)";editing=false;>Save</button>
+					<button class="btn btn-primary" ng-hide="!editing" ng-click="editing=!editing">Cancel</button>
+					<button class="btn btn-danger" ng-click="vm.removeUser(user)" ng-hide="editing">Delete</button>
+				</td>
+			</tr>
+		</table>
+		<button class="btn btn-primary btn-md" ng-hide="vm.detailed ||vm.adduser==true" ng-click="vm.adduser=!vm.adduser">Add A User</button>
+	</div>
+	<div class="container create-user" ng-hide="!vm.adduser">
+		<div class="form-group">
+			<label for="name">Name</label>
+			<input required type="text" id="name" class="form-control" style="width: 300px" ng-model="vm.user.name">
+		</div>
+		<div class="form-group">
+			<label for="age">Age</label>
+			<input required type="Number" id="age" class="form-control" style="width: 300px" ng-model="vm.user.age">
+		</div>
+		<button class="btn btn-success" ng-disabled="!vm.user.name || !vm.user.age" ng-model="vm.user.age" ng-click="vm.addUser(vm.user)">Add</button>
+		<button class="btn btn-primary" ng-click="vm.adduser=false">Back</button>
+	</div>
+	<div class="container details-container" ng-if="vm.detailed===true">
+		<div class="jumbatron">
+			<div class="close" style="font-size: 25px"data-ng-click="vm.detailed=false;">X</div>
+			<h3>You are Viewing the details of user #{{vm.detailedUser._id}}</h3>
+			<h2>Name : {{vm.detailedUser.name}}</h2>
+			<h2>Age : {{vm.detailedUser.age}}</h2>
+		</div>
+	</div>
+</div>
